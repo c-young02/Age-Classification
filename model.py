@@ -21,32 +21,29 @@ def build_model(input_shape, num_classes, learning_rate):
     # Load pre-trained ResNet50 model
     base_model = ResNet50(weights='imagenet', include_top=False, input_shape=input_shape)
 
-    # Build a sequential model
-    model = Sequential()
+    # Freeze the weights of the ResNet50 layers to prevent training
+    base_model.trainable = False
 
-    # Add ResNet50 as the base model
-    model.add(base_model)
+    # Build the model
+    model = Sequential([
+        base_model,
+        Flatten(),
 
-    # Flatten the output before dense layers
-    model.add(Flatten())
+        # Add Batch Normalization for stability
+        BatchNormalization(),
 
-    # Add Batch Normalization for stability
-    model.add(BatchNormalization())
+        # Add Dropout for regularization
+        Dropout(dropout_rate),
 
-    # Add Dropout for regularization
-    model.add(Dropout(dropout_rate))
+        Dense(256, activation='relu'),
 
-    # Dense layer with ReLU activation
-    model.add(Dense(256, activation='relu'))
+        BatchNormalization(),
 
-    # Add Batch Normalization for stability
-    model.add(BatchNormalization())
+        Dropout(dropout_rate),
 
-    # Add Dropout for regularization
-    model.add(Dropout(dropout_rate))
-
-    # Output layer with softmax activation for multi-class classification
-    model.add(Dense(num_classes, activation='softmax'))
+        # Output layer with softmax activation for multi-class classification
+        Dense(num_classes, activation='softmax')
+    ])
 
     # Compile the model with Adam optimizer and sparse categorical crossentropy loss
     model.compile(optimizer=Adam(learning_rate=learning_rate), loss='sparse_categorical_crossentropy',

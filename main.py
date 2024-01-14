@@ -40,7 +40,7 @@ def main():
     model = build_model(input_shape=(200, 200, 3), num_classes=7, learning_rate=0.0001)
 
     # Train the model
-    trained_model, history = train_model(model, x_train, y_train, x_test, y_test, epochs=1)
+    trained_model, history = train_model(model, x_train, y_train, x_test, y_test, epochs=30)
     print(f"Training complete. {len(history.history['accuracy'])} epoch trained.")
 
     # Evaluate the model
