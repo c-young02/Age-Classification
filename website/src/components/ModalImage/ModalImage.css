@@ -1,0 +1,16 @@
+.modal-image {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .modal-image:hover {
+    transform: scale(1.05);
+  }
+  
+  .modal-image.selected {
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 5px;
+  }

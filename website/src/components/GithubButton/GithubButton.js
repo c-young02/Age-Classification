@@ -1,9 +1,13 @@
 import React from 'react';
 import { FaGithub } from 'react-icons/fa';
 
-function GithubButton({ url }) {
+function GithubButton() {
 	return (
-		<a href={url} target="_blank" rel="noopener noreferrer">
+		<a
+			href="https://github.com/c-young02/Age-Classification"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
 			<button className="btn btn-success">
 				<FaGithub /> View the Code
 			</button>
