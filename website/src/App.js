@@ -1,5 +1,6 @@
 import Title from './components/Title/Title';
 import Navbar from './components/Navbar/Navbar';
+import StepsLogic from './components/StepsLogic/StepsLogic';
 
 function App() {
 	return (
@@ -7,6 +8,7 @@ function App() {
 			<header className="App-header">
 				<Navbar />
 				<Title />
+				<StepsLogic />
 			</header>
 		</div>
 	);
