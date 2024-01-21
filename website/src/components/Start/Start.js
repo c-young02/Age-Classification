@@ -21,6 +21,7 @@ function Start() {
 				button1="ImageModalLogic"
 				button2="RunButton"
 				onImageSelect={handleImageSelect}
+				selectedImage={selectedImage}
 			/>
 		</>
 	);
