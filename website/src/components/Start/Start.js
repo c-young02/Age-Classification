@@ -8,15 +8,15 @@ function Start() {
 	const [selectedImage, setSelectedImage] = useState(null);
 
 	const handleImageSelect = (image) => {
-		console.log(image);
 		setSelectedImage(image);
 	};
 
 	return (
 		<>
 			<Title pageTitle={title} />
-			<FaceImage image={selectedImage} />
-
+			{selectedImage && (
+				<FaceImage image={`data:image/png;base64,${selectedImage}`} />
+			)}
 			<ButtonContainer
 				button1="ImageModalLogic"
 				button2="RunButton"

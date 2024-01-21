@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import LoadImages from '../LoadImages/LoadImages';
+import './ImageModal.css';
 
 function ImageModal({ show, handleClose, onImageSelect }) {
 	const [selectedImage, setSelectedImage] = useState(null);
 
 	const handleImageClick = (image) => {
 		setSelectedImage(image);
-		console.log(image);
 	};
 
 	const handleSaveChanges = () => {
@@ -20,11 +20,11 @@ function ImageModal({ show, handleClose, onImageSelect }) {
 			<Modal.Header closeButton>
 				<Modal.Title>Select an Image</Modal.Title>
 			</Modal.Header>
-			<Modal.Body className="d-flex justify-content-center flex-wrap">
+			<Modal.Body className="modal-body">
 				<LoadImages
 					onImageClick={handleImageClick}
 					selectedImage={selectedImage}
-				/>{' '}
+				/>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={handleClose}>

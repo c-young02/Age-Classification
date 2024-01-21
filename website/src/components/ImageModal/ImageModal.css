@@ -1,0 +1,7 @@
+.modal-body {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    max-height: calc(100vh - 210px);
+  }
