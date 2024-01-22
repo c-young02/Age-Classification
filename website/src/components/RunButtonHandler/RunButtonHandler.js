@@ -1,11 +1,11 @@
-// RunButtonHandler.js
-
 export function handleRunButtonClick(selectedImage) {
 	let data = {
 		image: selectedImage,
 	};
 
-	fetch('http://localhost:8000/predict', {
+	const labels = ['0-2', '3-10', '11-17', '18-24', '25-40', '40-60', '60+'];
+
+	return fetch('http://localhost:8000/predict', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -14,7 +14,8 @@ export function handleRunButtonClick(selectedImage) {
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			console.log('Prediction:', data.prediction);
+			const label = labels[data.prediction];
+			return label;
 		})
 		.catch((error) => {
 			console.error('Error:', error);

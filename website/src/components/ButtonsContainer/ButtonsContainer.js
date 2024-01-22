@@ -4,11 +4,22 @@ import GetStarted from '../GetStarted/GetStarted';
 import RunButton from '../RunButton/RunButton';
 import ImageModalLogic from '../ImageModalLogic/ImageModalLogic';
 
-function ButtonContainer({ button1, button2, onImageSelect, selectedImage }) {
+function ButtonContainer({
+	button1,
+	button2,
+	onImageSelect,
+	selectedImage,
+	onLabelReceived,
+}) {
 	const components = {
 		GithubButton,
 		GetStarted,
-		RunButton: () => <RunButton selectedImage={selectedImage} />,
+		RunButton: () => (
+			<RunButton
+				selectedImage={selectedImage}
+				onLabelReceived={onLabelReceived}
+			/>
+		),
 		ImageModalLogic: () => <ImageModalLogic onImageSelect={onImageSelect} />,
 	};
 

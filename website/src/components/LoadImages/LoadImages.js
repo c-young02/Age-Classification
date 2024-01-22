@@ -3,7 +3,11 @@ import ModalImage from '../ModalImage/ModalImage';
 import useImages from '../useImages/useImages';
 
 function LoadImages({ onImageClick, selectedImage }) {
-	const images = useImages();
+	const { images, content } = useImages();
+
+	if (content) {
+		return content;
+	}
 
 	return (
 		<div className="container">
