@@ -7,7 +7,7 @@ import io
 from PIL import Image
 
 app = Flask(__name__)
-CORS(app, origins='http://localhost:3000')
+CORS(app, origins=['http://localhost:3000', 'http://192.168.1.212:3000'])
 
 # Load the model
 model = load_model('models/resnet50_model.h5')
@@ -58,4 +58,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(host='0.0.0.0', port=8000)

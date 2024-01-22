@@ -11,7 +11,6 @@ function RunButton({ selectedImage, onLabelReceived }) {
 
 	const handleClick = () => {
 		handleRunButtonClick(selectedImage).then((label) => {
-			console.log('Label:', label);
 			onLabelReceived(label);
 		});
 	};

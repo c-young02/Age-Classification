@@ -9,7 +9,9 @@ function useImages() {
 	const end = 48;
 
 	const loadImages = () => {
-		fetch(`http://localhost:8000/get-validation-images/${start}/${end}`)
+		fetch(
+			`${process.env.REACT_APP_API_URL}/get-validation-images/${start}/${end}`
+		)
 			.then((response) => response.json())
 			.then((data) => {
 				setImages((prevImages) => prevImages.concat(data.images));
