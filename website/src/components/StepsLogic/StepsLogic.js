@@ -3,8 +3,11 @@ import Steps from '../Steps/Steps';
 import { TbUser, TbUserScan } from 'react-icons/tb';
 import { SiThealgorithms } from 'react-icons/si';
 
+// StepsLogic component handles the logic for displaying the steps
 function StepsLogic() {
+	// Define the size of the icons
 	const iconSize = 75;
+	// Define the steps with their icons, titles, and texts
 	const steps = [
 		{
 			icon: <TbUser size={iconSize} />,
@@ -24,8 +27,10 @@ function StepsLogic() {
 	];
 
 	return (
+		// Render the steps in a flex container that wraps onto multiple lines and centers the items
 		<div className="d-flex justify-content-center flex-wrap">
 			{steps.map((step) => (
+				// For each step, render a Steps component with the step's icon, title, and text
 				<Steps
 					key={step.title}
 					icon={step.icon}

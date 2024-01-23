@@ -3,8 +3,10 @@ import Title from '../Title/Title';
 import Information from '../Information/Information';
 import ButtonContainer from '../ButtonsContainer/ButtonsContainer';
 
+// About component displays information about the project
 function About() {
 	const title = 'About the Project';
+
 	return (
 		<>
 			<Title pageTitle={title} />

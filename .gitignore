@@ -47,3 +47,31 @@ Thumbs.db
 # Ignore local configuration files
 *.local
 *.ini
+
+# Build and data directories
+/build
+/data
+
+# Environment files
+.env
+
+# Model files
+/models
+
+# Node modules and Debug logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React build directory
+/build
+
+# Ignore package-lock.json to avoid conflicts
+package-lock.json
+
+# Ignore yarn lock file
+yarn.lock
+
+# Ignore UTKFace directory
+/UTKFace
