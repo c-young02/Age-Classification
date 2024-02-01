@@ -41,7 +41,7 @@ function useImages() {
 
 	// If loading, return a Loading component
 	if (loading) {
-		return { content: <Loading /> };
+		return { content: <Loading message="Loading" /> };
 	}
 
 	// If there's an error, return an error message

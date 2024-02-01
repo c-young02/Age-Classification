@@ -11,6 +11,7 @@ function ButtonContainer({
 	onImageSelect,
 	selectedImage,
 	onLabelReceived,
+	setClassifying,
 }) {
 	// Map button names to their corresponding components
 	const components = {
@@ -21,6 +22,7 @@ function ButtonContainer({
 			<RunButton
 				selectedImage={selectedImage}
 				onLabelReceived={onLabelReceived}
+				setClassifying={setClassifying}
 			/>
 		),
 		ImageModalLogic: () => <ImageModalLogic onImageSelect={onImageSelect} />,

@@ -2,7 +2,7 @@ import React from 'react';
 import { handleRunButtonClick } from '../RunButtonHandler/RunButtonHandler';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-function RunButton({ selectedImage, onLabelReceived }) {
+function RunButton({ selectedImage, onLabelReceived, setClassifying }) {
 	// Tooltip to be displayed when no image is selected
 	const renderTooltip = (props) => (
 		<Tooltip id="button-tooltip" {...props}>
@@ -12,9 +12,11 @@ function RunButton({ selectedImage, onLabelReceived }) {
 
 	// Handler for button click
 	const handleClick = () => {
+		setClassifying(true);
 		// Run the age classification and pass the label to the parent component
 		handleRunButtonClick(selectedImage).then((label) => {
 			onLabelReceived(label);
+			setClassifying(false);
 		});
 	};
 

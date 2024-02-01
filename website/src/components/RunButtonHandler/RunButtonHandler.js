@@ -6,7 +6,7 @@ export function handleRunButtonClick(selectedImage) {
 	};
 
 	// Define the labels for the age groups
-	const labels = ['0-2', '3-10', '11-17', '18-24', '25-40', '40-60', '60+'];
+	const labels = ['0-2', '3-10', '11-17', '18-24', '25-39', '40-59', '60+'];
 
 	// Send a POST request to the server with the selected image
 	return fetch(`${process.env.REACT_APP_API_URL}/predict`, {
