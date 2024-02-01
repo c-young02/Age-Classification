@@ -2,7 +2,7 @@ import React from 'react';
 import './Loading.css';
 
 // Loading component displays a loading message
-function Loading({ message }) {
+function Loading({ message = 'Loading' }) {
 	return (
 		<div className="loading">
 			{/* Display "Loading" text followed by three dots */}

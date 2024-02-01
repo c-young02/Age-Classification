@@ -7,18 +7,14 @@ function ImageModalLogic({ onImageSelect }) {
 	// State for whether the modal is shown
 	const [show, setShow] = useState(false);
 
-	// Handlers for showing and hiding the modal
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
-
 	return (
 		<>
 			{/* Button for showing the modal */}
-			<SelectImageButton onClick={handleShow} />
+			<SelectImageButton onClick={() => setShow(true)} />
 			{/* Modal for image selection */}
 			<ImageModal
 				show={show}
-				handleClose={handleClose}
+				handleClose={() => setShow(false)}
 				onImageSelect={onImageSelect}
 			/>
 		</>

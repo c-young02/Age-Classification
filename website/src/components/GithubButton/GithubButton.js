@@ -7,6 +7,7 @@ function GithubButton() {
 			href="https://github.com/c-young02/Age-Classification"
 			target="_blank"
 			rel="noopener noreferrer"
+			aria-label="View the code on GitHub"
 		>
 			<button className="btn btn-success">
 				<FaGithub /> View the Code

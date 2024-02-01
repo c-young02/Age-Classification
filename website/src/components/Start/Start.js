@@ -2,9 +2,9 @@ import React from 'react';
 import Title from '../Title/Title';
 import ImageClassification from '../ImageClassification/ImageClassification';
 
-function Start() {
-	const title = 'Classify a Persons Age';
+const title = 'Classify a Persons Age';
 
+function Start() {
 	return (
 		<>
 			<Title pageTitle={title} />

@@ -35,8 +35,8 @@ function ButtonContainer({
 	return (
 		<div className="d-flex justify-content-center flex-wrap">
 			{/* Render the buttons if their names were passed in props */}
-			<div className="m-2">{Button1 && <Button1 />}</div>
-			<div className="m-2">{Button2 && <Button2 />}</div>
+			<div className="m-2">{Button1 && Button1()}</div>
+			<div className="m-2">{Button2 && Button2()}</div>
 		</div>
 	);
 }

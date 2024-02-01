@@ -5,44 +5,47 @@ import AgeClassification from '../AgeClassification/AgeClassification';
 import StartAgainButton from '../StartAgainButton/StartAgainButton';
 import Loading from '../Loading/Loading';
 
-// ImageClassification component handles the image selection and age classification process
 function ImageClassification() {
-	// State for the selected image and the classification label
-	const [selectedImage, setSelectedImage] = useState(null);
-	const [label, setLabel] = useState(null);
-	const [classifying, setClassifying] = useState(false);
+	// Initialize state
+	const [state, setState] = useState({
+		selectedImage: null,
+		label: null,
+		classifying: false,
+	});
 
-	// Handler for image selection
+	// Destructure state variables for easier access
+	const { selectedImage, label, classifying } = state;
+
+	// Function to handle image selection
 	const handleImageSelect = (image) => {
-		setSelectedImage(image);
+		setState((prevState) => ({ ...prevState, selectedImage: image }));
 	};
 
-	// Handler for receiving the classification label
+	// Function to handle receiving a label
 	const handleLabelReceived = (newLabel) => {
-		setLabel(newLabel);
+		setState((prevState) => ({ ...prevState, label: newLabel }));
 	};
 
-	// Reset the classification label
-	const resetLabel = () => {
-		setLabel(null);
+	// Function to reset the state
+	const reset = () => {
+		setState({ selectedImage: null, label: null, classifying: false });
 	};
 
-	// Reset the selected image
-	const resetImage = () => {
-		setSelectedImage(null);
-	};
-
+	// Render the component
 	return (
 		<>
+			{/* If an image is selected, display it */}
 			{selectedImage && (
 				<FaceImage image={`data:image/png;base64,${selectedImage}`} />
 			)}
+			{/* If classifying, display a loading message, otherwise display the buttons or the label */}
 			{classifying ? (
 				<div className="text-center h2">
 					<Loading message="Classifying" />
 				</div>
 			) : (
 				<>
+					{/* If no label is received yet, display the buttons */}
 					{!label && (
 						<ButtonContainer
 							button1="ImageModalLogic"
@@ -50,12 +53,17 @@ function ImageClassification() {
 							onImageSelect={handleImageSelect}
 							selectedImage={selectedImage}
 							onLabelReceived={handleLabelReceived}
-							setClassifying={setClassifying}
+							setClassifying={(classifying) =>
+								setState((prevState) => ({ ...prevState, classifying }))
+							}
 						/>
 					)}
-					{label && <AgeClassification label={label} />}
+					{/* If a label is received, display the label and the start again button */}
 					{label && (
-						<StartAgainButton resetLabel={resetLabel} resetImage={resetImage} />
+						<>
+							<AgeClassification label={label} />
+							<StartAgainButton reset={reset} />
+						</>
 					)}
 				</>
 			)}

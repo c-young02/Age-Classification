@@ -11,13 +11,17 @@ function RunButton({ selectedImage, onLabelReceived, setClassifying }) {
 	);
 
 	// Handler for button click
-	const handleClick = () => {
+	const handleClick = async () => {
 		setClassifying(true);
-		// Run the age classification and pass the label to the parent component
-		handleRunButtonClick(selectedImage).then((label) => {
+		try {
+			// Run the age classification and pass the label to the parent component
+			const label = await handleRunButtonClick(selectedImage);
 			onLabelReceived(label);
+		} catch (error) {
+			console.error(error);
+		} finally {
 			setClassifying(false);
-		});
+		}
 	};
 
 	// Button content

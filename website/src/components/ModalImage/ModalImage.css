@@ -1,16 +1,23 @@
+:root {
+  --transition-duration: 0.3s;
+  --selected-border-color: #007bff;
+}
+
 .modal-image {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .modal-image:hover {
-    transform: scale(1.05);
-  }
-  
-  .modal-image.selected {
-    border: 2px solid #007bff;
-    border-radius: 5px;
-    padding: 5px;
-  }
+  cursor: pointer;
+  transition: transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.modal-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-image.selected {
+  border: 2px solid var(--selected-border-color);
+  border-radius: 5px;
+  padding: 5px;
+}

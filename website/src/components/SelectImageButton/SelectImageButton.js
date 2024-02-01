@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 function SelectImageButton({ onClick }) {
 	return (
-		<Button variant="primary" onClick={onClick}>
+		<Button variant="primary" onClick={onClick} aria-label="Select Image">
 			Select Image
 		</Button>
 	);
