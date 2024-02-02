@@ -1,3 +1,4 @@
+# Importing necessary modules and functions
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from tensorflow.keras.models import load_model
@@ -6,21 +7,24 @@ import base64
 import io
 from PIL import Image
 
+# Creating a Flask app and enabling CORS
 app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000', 'http://192.168.1.212:3000'])
 
-# Load the model
+# Loading the model
 model = load_model('models/resnet50_model.h5')
 
-# Load the split data
-x_test = np.load('x_test.npy')
+# Loading the split data
+x_test = np.load('data/x_test.npy')
 
 
+# Home route
 @app.route('/')
 def home():
     return "Welcome to the backend"
 
 
+# Route to get validation images
 @app.route('/get-validation-images/<int:start>/<int:end>', methods=['GET'])
 def get_validation_images(start, end):
     images_base64 = []
@@ -36,22 +40,23 @@ def get_validation_images(start, end):
     return jsonify({'images': images_base64})
 
 
+# Route to predict the class of an image
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json
-    # Extract the base64 image string from the data
+    # Extracting the base64 image string from the data
     base64_image = data['image']
-    # Decode the base64 string
+    # Decoding the base64 string
     img_data = base64.b64decode(base64_image)
-    # Convert the raw image data to a PIL Image
+    # Converting the raw image data to a PIL Image
     img = Image.open(io.BytesIO(img_data))
-    # Resize the image to the size expected by the model
+    # Resizing the image to the size expected by the model
     img = img.resize((200, 200))
-    # Convert the PIL Image to a NumPy array
+    # Converting the PIL Image to a NumPy array
     img_array = np.array(img)
-    # Reshape the NumPy array to the shape expected by the model
+    # Reshaping the NumPy array to the shape expected by the model
     img_array = img_array.reshape(1, 200, 200, 3)
-    # Predict the class of the image
+    # Predicting the class of the image
     prediction = model.predict(img_array)
     prediction = np.argmax(prediction, axis=1)
     return jsonify({'prediction': int(prediction)})

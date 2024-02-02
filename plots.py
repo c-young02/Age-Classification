@@ -65,17 +65,16 @@ def plot_model_accuracy(history):
     plt.show()
 
 
-def plot_confusion_matrix(y_true, y_pred):
+def plot_confusion_matrix(y_true, y_pred, class_labels):
     """
     Plot the confusion matrix.
 
     Args:
         y_true (np.ndarray): True labels.
         y_pred (np.ndarray): Predicted labels.
+        class_labels (list): List of classes.
     """
     conf_matrix = confusion_matrix(y_true, y_pred)
-
-    class_labels = ['0-2', '3-10', '11-17', '18-24', '25-40', '40-60', '60+']
     plt.figure(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=class_labels, yticklabels=class_labels)
     plt.title('Confusion Matrix')
@@ -83,3 +82,29 @@ def plot_confusion_matrix(y_true, y_pred):
     plt.ylabel('True')
     plt.savefig('plots/confusion_matrix.png')
     plt.show()
+
+
+def print_misclassifications(y_true, y_pred, class_labels):
+    """
+    Print and return counts of misclassifications.
+
+    Args:
+        y_true (np.ndarray): True labels.
+        y_pred (np.ndarray): Predicted labels.
+        class_labels (list): List of labels for the classes to consider.
+
+    Returns:
+        dict: Dictionary with counts of misclassifications for each class.
+    """
+    conf_matrix = confusion_matrix(y_true, y_pred)
+
+    # Indices for ages under 18 and over 25
+    under_18_indices = [i for i, label in enumerate(class_labels) if label in ['0-2', '3-10', '11-17']]
+    over_25_indices = [i for i, label in enumerate(class_labels) if label in ['25-39', '40-59', '60+']]
+
+    # Sum the elements of the confusion matrix that correspond to these indices
+    misclassified_count = np.sum(conf_matrix[under_18_indices, :][:, over_25_indices])
+
+    print(f'Number of people under 18 misclassified as over 25: {misclassified_count}')
+
+    return misclassified_count
