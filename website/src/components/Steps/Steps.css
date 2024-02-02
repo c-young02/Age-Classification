@@ -1,0 +1,23 @@
+:root {
+    --black-color: #000;
+    --shadow-color-light: rgba(0, 0, 0, 0.12);
+    --shadow-color-dark: rgba(0, 0, 0, 0.06);
+}
+
+.my-card {
+    width: 20rem;
+    transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.my-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px var(--shadow-color-light), 0 4px 8px var(--shadow-color-dark);
+}
+
+.card-title {
+    font-size: 1.5em;
+}
+
+.card-border {
+    border: 1px solid var(--black-color);
+}
