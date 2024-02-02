@@ -10,7 +10,7 @@ export async function handleRunButtonClick(selectedImage) {
 
 	try {
 		// Send a POST request to the server with the selected image
-		const response = await fetch(`${process.env.REACT_APP_API_URL}/predict`, {
+		const response = await fetch(`/api/predict`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
