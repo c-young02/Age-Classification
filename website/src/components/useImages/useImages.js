@@ -12,7 +12,7 @@ function useImages() {
 	const loadImages = async () => {
 		try {
 			const response = await fetch(
-				`/api/get-validation-images/${start}/${end}`
+				`${process.env.REACT_APP_API_URL}/get-validation-images/${start}/${end}`
 			);
 			const data = await response.json();
 			setImages((prevImages) => prevImages.concat(data.images));
