@@ -37,8 +37,6 @@ Welcome to the Age Classification repository! This project is a culmination of m
 
 ## Built With
 
-
-
 * [Python](https://www.python.org/)
 * [TensorFlow](https://www.tensorflow.org/)
 * [Flask](https://flask.palletsprojects.com/en/3.0.x/)
@@ -48,12 +46,10 @@ Welcome to the Age Classification repository! This project is a culmination of m
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 
 * node
 * Python
