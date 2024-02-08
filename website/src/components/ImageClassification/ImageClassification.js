@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ButtonContainer from '../ButtonsContainer/ButtonsContainer';
+import ClassifyButtonContainer from '../ClassifyButtonContainer/ClassifyButtonContainer';
 import FaceImage from '../FaceImage/FaceImage';
 import AgeClassification from '../AgeClassification/AgeClassification';
 import StartAgainButton from '../StartAgainButton/StartAgainButton';
@@ -36,7 +36,9 @@ function ImageClassification() {
 		<>
 			{/* If an image is selected, display it */}
 			{selectedImage && (
-				<FaceImage image={`data:image/png;base64,${selectedImage}`} />
+				<div className="d-flex justify-content-center align-items-center mb-5">
+					<FaceImage image={`data:image/png;base64,${selectedImage}`} />
+				</div>
 			)}
 			{/* If classifying, display a loading message, otherwise display the buttons or the label */}
 			{classifying ? (
@@ -47,16 +49,16 @@ function ImageClassification() {
 				<>
 					{/* If no label is received yet, display the buttons */}
 					{!label && (
-						<ButtonContainer
-							button1="ImageModalLogic"
-							button2="RunButton"
-							onImageSelect={handleImageSelect}
-							selectedImage={selectedImage}
-							onLabelReceived={handleLabelReceived}
-							setClassifying={(classifying) =>
-								setState((prevState) => ({ ...prevState, classifying }))
-							}
-						/>
+						<>
+							<ClassifyButtonContainer
+								onImageSelect={handleImageSelect}
+								selectedImage={selectedImage}
+								onLabelReceived={handleLabelReceived}
+								setClassifying={(classifying) =>
+									setState((prevState) => ({ ...prevState, classifying }))
+								}
+							/>
+						</>
 					)}
 					{/* If a label is received, display the label and the start again button */}
 					{label && (

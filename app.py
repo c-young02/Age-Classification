@@ -1,4 +1,4 @@
-# Importing necessary modules and functions
+# Import necessary modules and functions
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from tensorflow.keras.models import load_model
@@ -6,27 +6,30 @@ import numpy as np
 import base64
 import io
 from PIL import Image
+import cv2
 
-# Creating a Flask app and enabling CORS
+# Initialize Flask app and enable CORS
 app = Flask(__name__)
 CORS(app, origins=['http://localhost:3000', 'http://192.168.1.212:3000'])
 
-# Loading the model
+# Load pre-trained model
 model = load_model('models/resnet50_model.h5')
 
-# Loading the split data
+# Load test data
 x_test = np.load('data/x_test.npy')
 
+# Load Haar cascade for face detection
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Home route
+
 @app.route('/')
 def home():
     return "Welcome to the backend"
 
 
-# Route to get validation images
 @app.route('/get-validation-images/<int:start>/<int:end>', methods=['GET'])
 def get_validation_images(start, end):
+    # Convert images to base64 for transmission
     images_base64 = []
     for img in x_test[start:end]:
         img_pil = Image.fromarray(img.astype('uint8'))
@@ -40,27 +43,51 @@ def get_validation_images(start, end):
     return jsonify({'images': images_base64})
 
 
-# Route to predict the class of an image
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.json
-    # Extracting the base64 image string from the data
-    base64_image = data['image']
-    # Decoding the base64 string
-    img_data = base64.b64decode(base64_image)
-    # Converting the raw image data to a PIL Image
-    img = Image.open(io.BytesIO(img_data))
-    # Resizing the image to the size expected by the model
-    img = img.resize((200, 200))
-    # Converting the PIL Image to a NumPy array
-    img_array = np.array(img)
-    # Reshaping the NumPy array to the shape expected by the model
-    img_array = img_array.reshape(1, 200, 200, 3)
-    # Predicting the class of the image
-    prediction = model.predict(img_array)
-    prediction = np.argmax(prediction, axis=1)
-    return jsonify({'prediction': int(prediction)})
+    try:
+        # Decode image from base64
+        data = request.json
+        base64_image = data['image']
+        img_data = base64.b64decode(base64_image)
+        img = Image.open(io.BytesIO(img_data))
+        img = img.convert('RGB')
+
+        # Crop face from image
+        img = crop_face(img)
+
+        # Resize image
+        img = img.resize((200, 200))
+        img_array = np.array(img)
+        img_array = img_array.reshape(1, 200, 200, 3)
+
+        # Make age classification
+        prediction = model.predict(img_array)
+        prediction = np.argmax(prediction, axis=1)
+        return jsonify({'prediction': int(prediction)})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+def crop_face(image):
+    # Convert image to OpenCV format and detect faces
+    img_cv = np.array(image)
+    img_cv = cv2.cvtColor(img_cv, cv2.COLOR_RGB2BGR)
+
+    faces = face_cascade.detectMultiScale(img_cv, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+    # Crop first detected face from image
+    if len(faces) > 0:
+        (x, y, w, h) = faces[0]
+        img_cv = img_cv[y:y+h, x:x+w]
+
+    # Convert image back to PIL format and save for testing purposes
+    img = Image.fromarray(cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB))
+    img.save('cropped_face.png')
+
+    return img
 
 
 if __name__ == '__main__':
+    # Start Flask server
     app.run(host='0.0.0.0', port=8000)

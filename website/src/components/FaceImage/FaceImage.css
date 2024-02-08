@@ -1,0 +1,28 @@
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.face-image {
+    border: 1px solid #000;
+    object-fit: contain;
+}
+
+/* Styles for PC */
+@media (min-width: 768px) {
+    .face-image {
+        max-height: 80%;
+        max-width: 25%;
+    }
+}
+
+/* Styles for mobile */
+@media (max-width: 767px) {
+    .face-image {
+        max-height: 70%;
+        max-width: 70%;
+    }
+}

@@ -11,7 +11,7 @@ function About() {
 		<>
 			<Title pageTitle={title} />
 			<Information />
-			<ButtonContainer button1="GithubButton" button2="GetStarted" />
+			<ButtonContainer />
 		</>
 	);
 }

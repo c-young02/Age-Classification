@@ -1,9 +1,10 @@
 import React from 'react';
+import './FaceImage.css';
 
 function FaceImage({ image }) {
 	return (
-		<div className="d-flex justify-content-center mb-5">
-			<img src={image} alt="Selected face" className="border border-dark" />
+		<div className="image-container">
+			<img src={image} alt="Selected face" className="face-image" />
 		</div>
 	);
 }

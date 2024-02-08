@@ -27,7 +27,7 @@ function RunButton({ selectedImage, onLabelReceived, setClassifying }) {
 	// Button content
 	const ButtonContent = (
 		<Button
-			className="btn btn-success"
+			className="btn btn-success px-5"
 			onClick={handleClick}
 			// Disable the button if no image is selected
 			disabled={!selectedImage}

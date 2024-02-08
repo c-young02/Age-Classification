@@ -36,7 +36,7 @@ function useImages() {
 		return {
 			content: (
 				<div>
-					Error: {error.message}
+					There was an error loading the images{' '}
 					<button onClick={loadImages}>Retry</button>
 				</div>
 			),

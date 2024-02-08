@@ -75,3 +75,4 @@ yarn.lock
 
 # Ignore UTKFace directory
 /UTKFace
+cropped_face.png
