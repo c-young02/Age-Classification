@@ -1,6 +1,6 @@
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Flatten, BatchNormalization, Dropout
+from tensorflow.keras.layers import Dense, Flatten, BatchNormalization, Dropout, Conv2D, MaxPooling2D
 from tensorflow.keras.optimizers import Adam
 
 dropout_rate = 0.5
@@ -27,21 +27,14 @@ def build_model(input_shape, num_classes, learning_rate):
     # Build the model
     model = Sequential([
         base_model,
+        Conv2D(64, (3, 3), activation='relu'),
+        MaxPooling2D(pool_size=(2, 2)),
         Flatten(),
-
-        # Add Batch Normalization for stability
         BatchNormalization(),
-
-        # Add Dropout for regularization
         Dropout(dropout_rate),
-
         Dense(256, activation='relu'),
-
         BatchNormalization(),
-
         Dropout(dropout_rate),
-
-        # Output layer with softmax activation for multi-class classification
         Dense(num_classes, activation='softmax')
     ])
 

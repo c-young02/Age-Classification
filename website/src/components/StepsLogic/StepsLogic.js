@@ -21,7 +21,7 @@ const steps = [
 	{
 		icon: <TbUserScan size={iconSize} />,
 		title: 'View Results',
-		text: 'The estimated age will be displayed along with the confidence level of the model.',
+		text: 'The classified age will be displayed.',
 	},
 ];
 

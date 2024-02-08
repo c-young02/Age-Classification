@@ -1,4 +1,3 @@
-# main.py
 from load_data import load_data_parallel
 from preprocessing import create_age_classes, undersample_age, split_data
 from plots import plot_age_distribution, plot_images_grid, plot_model_accuracy, plot_confusion_matrix, print_misclassifications
@@ -6,6 +5,8 @@ from model import build_model
 from train import train_model
 import numpy as np
 from tensorflow.keras.models import save_model
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 def main():
@@ -43,8 +44,26 @@ def main():
     # Build and compile the model
     model = build_model(input_shape=(200, 200, 3), num_classes=7, learning_rate=0.0001)
 
-    # Train the model
-    trained_model, history = train_model(model, x_train, y_train, x_test, y_test, epochs=20, batch_size=32)
+    # Define callbacks
+    early_stopping = EarlyStopping(monitor='val_loss', patience=10)
+    lr_schedule = ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5)
+
+    # Create an ImageDataGenerator object
+    datagen = ImageDataGenerator(
+        rotation_range=20,  # randomly rotate images in the range (degrees, 0 to 180)
+        width_shift_range=0.2,  # randomly shift images horizontally (fraction of total width)
+        height_shift_range=0.2,  # randomly shift images vertically (fraction of total height)
+        horizontal_flip=True,  # randomly flip images
+        zoom_range=0.2,  # Randomly zoom image
+    )
+
+    # Compute quantities required for featurewise normalization
+    datagen.fit(x_train)
+
+    # Train the model with callbacks and data augmentation
+    trained_model, history = train_model(model, datagen.flow(x_train, y_train, batch_size=32), None, x_test, y_test,
+                                         epochs=100, batch_size=32,
+                                         callbacks=[early_stopping, lr_schedule])
     print(f"Training complete. {len(history.history['accuracy'])} epoch trained.")
 
     # Evaluate the model
@@ -65,7 +84,7 @@ def main():
 
     # Print misclassifications
     print_misclassifications(y_test, y_pred_classes, class_labels)
-    # save_model(model, 'models/resnet50_model.h5')
+    save_model(model, 'models/resnet50_model.h5')
 
 
 if __name__ == "__main__":

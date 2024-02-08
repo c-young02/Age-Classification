@@ -9,7 +9,7 @@ from PIL import Image
 
 # Creating a Flask app and enabling CORS
 app = Flask(__name__)
-CORS(app, origins=['http://localhost:3000', 'http://192.168.1.212:3000', 'https://facial-age-classification.netlify.app'])
+CORS(app, origins=['http://localhost:3000', 'http://192.168.1.212:3000'])
 
 # Loading the model
 model = load_model('models/resnet50_model.h5')
