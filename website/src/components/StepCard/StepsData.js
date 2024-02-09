@@ -14,13 +14,13 @@ const steps = [
 	},
 	{
 		icon: <SiThealgorithms size={iconSize} />,
-		title: 'Analyse Image',
-		text: 'The model will analyse the selected image and estimate the age of the person.',
+		title: 'Analyse the Image',
+		text: 'The model will analyse the selected image and classify the age of the person.',
 	},
 	{
 		icon: <TbUserScan size={iconSize} />,
 		title: 'View Results',
-		text: 'The classified age will be displayed.',
+		text: 'After analysis, the program returns the predicted age range alongside a confidence level, reflecting the models certainty.',
 	},
 ];
 
