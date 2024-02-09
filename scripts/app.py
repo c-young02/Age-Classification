@@ -1,30 +1,23 @@
 import base64
 import io
-import os
 
-from PIL import Image
-import cv2
 import numpy as np
-from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from tensorflow.keras.models import load_model
-
-# Load environment variables
-load_dotenv()
+from config import Config
+from image_processing import crop_face
+from PIL import Image
 
 # Initialize Flask app and enable CORS
 app = Flask(__name__)
-CORS(app, origins=[os.getenv('FRONTEND_ORIGIN'), 'http://localhost:3000'])
+CORS(app, origins=[Config.FRONTEND_ORIGIN, 'http://localhost:3000'])
 
 # Load pre-trained model
-model = load_model('models/resnet50_model.h5')
+model = load_model(Config.MODEL_PATH)
 
 # Load test data
-x_test = np.load('data/x_test.npy')
-
-# Load Haar cascade for face detection
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+x_test = np.load(Config.TEST_DATA_PATH)
 
 
 @app.route('/')
@@ -60,37 +53,19 @@ def predict():
 
         # Crop face from image
         img = crop_face(img)
-
         # Resize image
         img = img.resize((200, 200))
         img_array = np.array(img)
         img_array = img_array.reshape(1, 200, 200, 3)
-
         # Make age classification
         prediction = model.predict(img_array)
-        prediction = np.argmax(prediction, axis=1)
-        return jsonify({'prediction': int(prediction)})
+        predicted_class = np.argmax(prediction[0], axis=0)
+        confidence = prediction[0][predicted_class]
+        return jsonify({'prediction': int(predicted_class), 'confidence': float(confidence)})
+    except KeyError:
+        return jsonify({'error': 'Invalid request. Please provide an image.'}), 400
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-def crop_face(image):
-    # Convert image to OpenCV format and detect faces
-    img_cv = np.array(image)
-    img_cv = cv2.cvtColor(img_cv, cv2.COLOR_RGB2BGR)
-
-    faces = face_cascade.detectMultiScale(img_cv, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
-
-    # Crop first detected face from image
-    if len(faces) > 0:
-        (x, y, w, h) = faces[0]
-        img_cv = img_cv[y:y+h, x:x+w]
-
-    # Convert image back to PIL format and save for testing purposes
-    img = Image.fromarray(cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB))
-    img.save('cropped_face.png')
-
-    return img
+        return jsonify({'error': 'An error occurred while processing the image.'}), 500
 
 
 if __name__ == '__main__':
