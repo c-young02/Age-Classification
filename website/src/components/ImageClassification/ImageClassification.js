@@ -1,66 +1,40 @@
-import React, { useState } from 'react';
-import ClassifyButtonContainer from '../ClassifyButtonContainer/ClassifyButtonContainer';
-import FaceImage from '../FaceImage/FaceImage';
+import React from 'react';
+import ClassificationControls from '../Buttons/ClassificationControls/ClassificationControls';
+import SelectedImage from '../SelectedImage/SelectedImage';
 import AgeClassification from '../AgeClassification/AgeClassification';
-import StartAgainButton from '../StartAgainButton/StartAgainButton';
-import Loading from '../Loading/Loading';
+import StartAgainButton from '../Buttons/StartAgainButton/StartAgainButton';
+import Loading from '../Common/Loading/Loading';
 
-function ImageClassification() {
-	// Initialize state
-	const [state, setState] = useState({
-		selectedImage: null,
-		label: null,
-		classifying: false,
-	});
-
-	// Destructure state variables for easier access
-	const { selectedImage, label, classifying } = state;
-
-	// Function to handle image selection
-	const handleImageSelect = (image) => {
-		setState((prevState) => ({ ...prevState, selectedImage: image }));
-	};
-
-	// Function to handle receiving a label
-	const handleLabelReceived = (newLabel) => {
-		setState((prevState) => ({ ...prevState, label: newLabel }));
-	};
-
-	// Function to reset the state
-	const reset = () => {
-		setState({ selectedImage: null, label: null, classifying: false });
-	};
-
-	// Render the component
+function ImageClassification({
+	selectedImage,
+	label,
+	classifying,
+	onImageSelect,
+	onLabelReceived,
+	reset,
+	setClassifying,
+}) {
 	return (
 		<>
-			{/* If an image is selected, display it */}
 			{selectedImage && (
 				<div className="d-flex justify-content-center align-items-center mb-5">
-					<FaceImage image={`data:image/png;base64,${selectedImage}`} />
+					<SelectedImage image={`data:image/png;base64,${selectedImage}`} />
 				</div>
 			)}
-			{/* If classifying, display a loading message, otherwise display the buttons or the label */}
 			{classifying ? (
 				<div className="text-center h2">
 					<Loading message="Classifying" />
 				</div>
 			) : (
 				<>
-					{/* If no label is received yet, display the buttons */}
 					{!label && (
-						<>
-							<ClassifyButtonContainer
-								onImageSelect={handleImageSelect}
-								selectedImage={selectedImage}
-								onLabelReceived={handleLabelReceived}
-								setClassifying={(classifying) =>
-									setState((prevState) => ({ ...prevState, classifying }))
-								}
-							/>
-						</>
+						<ClassificationControls
+							onImageSelect={onImageSelect}
+							selectedImage={selectedImage}
+							onLabelReceived={onLabelReceived}
+							setClassifying={setClassifying}
+						/>
 					)}
-					{/* If a label is received, display the label and the start again button */}
 					{label && (
 						<>
 							<AgeClassification label={label} />

@@ -1,16 +1,21 @@
-# Import necessary modules and functions
+import base64
+import io
+import os
+
+from PIL import Image
+import cv2
+import numpy as np
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from tensorflow.keras.models import load_model
-import numpy as np
-import base64
-import io
-from PIL import Image
-import cv2
+
+# Load environment variables
+load_dotenv()
 
 # Initialize Flask app and enable CORS
 app = Flask(__name__)
-CORS(app, origins=['http://localhost:3000', 'http://192.168.1.212:3000'])
+CORS(app, origins=[os.getenv('FRONTEND_ORIGIN'), 'http://localhost:3000'])
 
 # Load pre-trained model
 model = load_model('models/resnet50_model.h5')

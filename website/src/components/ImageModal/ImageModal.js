@@ -1,26 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import LoadImages from '../LoadImages/LoadImages';
+import ImageSelectionGridContainer from './ImageSelectionGrid/ImageSelectionGridContainer';
 import './ImageModal.css';
 
 // ImageModal component displays a modal for image selection
-function ImageModal({ show, handleClose, onImageSelect }) {
-	// State for the selected image
-	const [selectedImage, setSelectedImage] = useState(null);
-
-	// Handler for image click
-	const handleImageClick = (image) => {
-		setSelectedImage(image);
-	};
-
-	// Handler for saving changes
-	const handleSaveChanges = () => {
-		// Pass the selected image to the parent component
-		onImageSelect(selectedImage);
-		// Close the modal
-		handleClose();
-	};
-
+function ImageModal({
+	show,
+	handleClose,
+	handleSaveChanges,
+	onImageSelect,
+	selectedImage,
+}) {
 	return (
 		<Modal show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
@@ -28,8 +18,8 @@ function ImageModal({ show, handleClose, onImageSelect }) {
 			</Modal.Header>
 			<Modal.Body className="modal-body">
 				{/* Load and display images */}
-				<LoadImages
-					onImageClick={handleImageClick}
+				<ImageSelectionGridContainer
+					onImageClick={onImageSelect}
 					selectedImage={selectedImage}
 				/>
 			</Modal.Body>
