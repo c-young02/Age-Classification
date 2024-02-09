@@ -8,6 +8,7 @@ function ClassificationControls({
 	selectedImage,
 	onLabelReceived,
 	setClassifying,
+	onConfidenceReceived,
 }) {
 	return (
 		<div className="d-flex justify-content-center flex-wrap">
@@ -19,6 +20,7 @@ function ClassificationControls({
 				selectedImage={selectedImage}
 				onLabelReceived={onLabelReceived}
 				setClassifying={setClassifying}
+				onConfidenceReceived={onConfidenceReceived}
 			/>
 		</div>
 	);

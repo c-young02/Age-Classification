@@ -6,11 +6,12 @@ function ImageClassificationContainer() {
 	const [state, setState] = useState({
 		selectedImage: null,
 		label: null,
+		confidence: null,
 		classifying: false,
 	});
 
 	// Destructure state variables for easier access
-	const { selectedImage, label, classifying } = state;
+	const { selectedImage, label, confidence, classifying } = state;
 
 	// Function to handle image selection
 	const handleImageSelect = (image) => {
@@ -22,6 +23,11 @@ function ImageClassificationContainer() {
 		setState((prevState) => ({ ...prevState, label: newLabel }));
 	};
 
+	// Function to handle receiving a confidence
+	const handleConfidenceReceived = (newConfidence) => {
+		setState((prevState) => ({ ...prevState, confidence: newConfidence }));
+	};
+
 	// Function to set classifying
 	const setClassifying = (classifying) => {
 		setState((prevState) => ({ ...prevState, classifying }));
@@ -29,16 +35,23 @@ function ImageClassificationContainer() {
 
 	// Function to reset the state
 	const reset = () => {
-		setState({ selectedImage: null, label: null, classifying: false });
+		setState({
+			selectedImage: null,
+			label: null,
+			confidence: null,
+			classifying: false,
+		});
 	};
 
 	return (
 		<ImageClassification
 			selectedImage={selectedImage}
 			label={label}
+			confidence={confidence}
 			classifying={classifying}
 			onImageSelect={handleImageSelect}
 			onLabelReceived={handleLabelReceived}
+			onConfidenceReceived={handleConfidenceReceived}
 			reset={reset}
 			setClassifying={setClassifying}
 		/>

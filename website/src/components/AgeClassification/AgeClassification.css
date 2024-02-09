@@ -1,0 +1,28 @@
+.text-center {
+    text-align: center;
+}
+
+.confidence-container {
+    max-width: 80%; /* width for mobile devices */
+    margin: 20px auto; /* centers the container horizontally and adds vertical spacing */
+}
+
+.progress {
+    background-color: #f3f3f3; /* background color of the progress bar */
+    height: 20px; /* height of the progress bar */
+    border-radius: 10px; /* rounded corners */
+}
+
+.progress-bar {
+    height: 100%; /* full height of the progress bar */
+    transition: width 0.4s ease-in-out; /* smooth width transition */
+    font-size: 1.4em; /* increase the font size */
+    padding: 0 5px; /* adds horizontal padding */
+}
+
+/* Media query for desktop devices */
+@media (min-width: 768px) {
+    .confidence-container {
+        max-width: 15%; /* width for desktop devices */
+    }
+}

@@ -25,5 +25,10 @@ export async function predictImageAgeGroup(selectedImage) {
 
 	// Get the label for the predicted age group
 	const label = labels[responseData.prediction];
-	return label;
+
+	// Get the confidence score
+	const confidence = responseData.confidence;
+
+	// Return both the label and the confidence score
+	return { label, confidence };
 }

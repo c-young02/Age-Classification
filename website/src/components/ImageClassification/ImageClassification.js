@@ -1,18 +1,20 @@
 import React from 'react';
 import ClassificationControls from '../Buttons/ClassificationControls/ClassificationControls';
 import SelectedImage from '../SelectedImage/SelectedImage';
-import AgeClassification from '../AgeClassification/AgeClassification';
+import AgeClassificationContainer from '../AgeClassification/AgeClassificationContainer';
 import StartAgainButton from '../Buttons/StartAgainButton/StartAgainButton';
 import Loading from '../Common/Loading/Loading';
 
 function ImageClassification({
 	selectedImage,
 	label,
+	confidence,
 	classifying,
 	onImageSelect,
 	onLabelReceived,
 	reset,
 	setClassifying,
+	onConfidenceReceived,
 }) {
 	return (
 		<>
@@ -32,12 +34,16 @@ function ImageClassification({
 							onImageSelect={onImageSelect}
 							selectedImage={selectedImage}
 							onLabelReceived={onLabelReceived}
+							onConfidenceReceived={onConfidenceReceived}
 							setClassifying={setClassifying}
 						/>
 					)}
 					{label && (
 						<>
-							<AgeClassification label={label} />
+							<AgeClassificationContainer
+								label={label}
+								confidence={confidence}
+							/>
 							<StartAgainButton reset={reset} />
 						</>
 					)}
