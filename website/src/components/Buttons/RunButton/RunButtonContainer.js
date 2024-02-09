@@ -6,7 +6,7 @@ function RunButtonContainer({
 	selectedImage,
 	onLabelReceived,
 	setClassifying,
-	onConfidenceReceived, // New prop to handle the confidence score
+	onConfidenceReceived,
 }) {
 	// Handler for button click
 	const handleClick = async () => {
@@ -15,7 +15,7 @@ function RunButtonContainer({
 			// Run the age classification and pass the label and confidence to the parent component
 			const { label, confidence } = await predictImageAgeGroup(selectedImage);
 			onLabelReceived(label);
-			onConfidenceReceived(confidence); // Pass the confidence score to the parent component
+			onConfidenceReceived(confidence);
 		} catch (error) {
 			console.error(error);
 		} finally {
