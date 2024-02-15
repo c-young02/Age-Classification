@@ -66,7 +66,7 @@ def plot_model_accuracy(history):
 
 def plot_confusion_matrix(y_true, y_pred, class_labels):
     """
-    Plot the confusion matrix.
+    Plot the confusion matrix and the normalized confusion matrix.
 
     Args:
         y_true (np.ndarray): True labels.
@@ -74,12 +74,27 @@ def plot_confusion_matrix(y_true, y_pred, class_labels):
         class_labels (list): List of classes.
     """
     conf_matrix = confusion_matrix(y_true, y_pred)
+
+    # Plot the original confusion matrix
     plt.figure(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=class_labels, yticklabels=class_labels)
     plt.title('Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.savefig('plots/confusion_matrix.png')
+    plt.show()
+
+    # Normalize the confusion matrix
+    conf_matrix = conf_matrix.astype('float') / conf_matrix.sum(axis=1)[:, np.newaxis]
+    conf_matrix = np.round(conf_matrix, 4)  # round to 2 decimal places
+
+    # Plot the normalized confusion matrix
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(conf_matrix, annot=True, fmt='.2%', cmap='Blues', xticklabels=class_labels, yticklabels=class_labels)
+    plt.title('Normalized Confusion Matrix')
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.savefig('plots/normalized_confusion_matrix.png')
     plt.show()
 
 
@@ -98,7 +113,7 @@ def print_misclassifications(y_true, y_pred, class_labels):
     conf_matrix = confusion_matrix(y_true, y_pred)
 
     # Indices for ages under 18 and over 25
-    under_18_indices = [i for i, label in enumerate(class_labels) if label in ['0-2', '3-10', '11-17']]
+    under_18_indices = [i for i, label in enumerate(class_labels) if label in ['0-2', '3-17']]
     over_25_indices = [i for i, label in enumerate(class_labels) if label in ['25-39', '40-59', '60+']]
 
     # Sum the elements of the confusion matrix that correspond to these indices

@@ -10,6 +10,9 @@ __pycache__/
 # Jupyter Notebooks
 .ipynb_checkpoints/
 
+# Model files
+/models
+
 # Virtual environments
 venv/
 env/
@@ -55,8 +58,6 @@ Thumbs.db
 # Environment files
 .env
 
-# Model files
-/models
 
 # Node modules and Debug logs
 node_modules/
@@ -75,4 +76,3 @@ yarn.lock
 
 # Ignore UTKFace directory
 /UTKFace
-cropped_face.png

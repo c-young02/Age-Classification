@@ -1,6 +1,8 @@
 from PIL import Image
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import cv2
 import numpy as np
+
 
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -33,3 +35,25 @@ def crop_face(image):
     img = Image.fromarray(cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB))
 
     return img
+
+
+def create_datagen(rotation_range=20, width_shift_range=0.2, height_shift_range=0.2, horizontal_flip=True):
+    """
+    Create an ImageDataGenerator object with the given parameters.
+
+    Args:
+        rotation_range (int, optional): Degree range for random rotations. Defaults to 20.
+        width_shift_range (float, optional): Range for random horizontal shifts. Defaults to 0.2.
+        height_shift_range (float, optional): Range for random vertical shifts. Defaults to 0.2.
+        horizontal_flip (bool, optional): Whether to randomly flip inputs horizontally. Defaults to True.
+
+    Returns:
+        ImageDataGenerator: The created ImageDataGenerator object.
+    """
+    datagen = ImageDataGenerator(
+        rotation_range=rotation_range,
+        width_shift_range=width_shift_range,
+        height_shift_range=height_shift_range,
+        horizontal_flip=horizontal_flip,
+    )
+    return datagen

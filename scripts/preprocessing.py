@@ -14,9 +14,9 @@ def create_age_classes(df):
         pd.DataFrame: The DataFrame with an added 'AgeClass' column.
     """
 
-    bins = [0, 2, 10, 17, 24, 39, 59, np.inf]
-    # '0-2', '3-10', '11-17', '18-24', '25-39', '40-59', '60+'
-    labels = [0, 1, 2, 3, 4, 5, 6]
+    bins = [0, 2, 17, 24, 39, 59, np.inf]
+    # '0-2', '3-17', '18-24', '25-39', '40-59', '60+'
+    labels = [0, 1, 2, 3, 4, 5]
     df['AgeClass'] = pd.cut(df['Ages'], bins=bins, labels=labels)
     return df
 

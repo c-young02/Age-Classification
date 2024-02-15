@@ -6,7 +6,7 @@ export async function predictImageAgeGroup(selectedImage) {
 	};
 
 	// Define the labels for the age groups
-	const labels = ['0-2', '3-10', '11-17', '18-24', '25-39', '40-59', '60+'];
+	const labels = ['0-2', '3-17', '18-24', '25-39', '40-59', '60+'];
 
 	// Send a POST request to the server with the selected image
 	const response = await fetch(`${process.env.REACT_APP_API_URL}/predict`, {
