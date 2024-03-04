@@ -1,20 +1,20 @@
-def train_model(model, x_train, y_train, x_test, y_test, epochs, batch_size=32, callbacks=None):
+def train_model(model, train_data, val_data, x_test, y_test, epochs=10, batch_size=32, callbacks=None):
     """
-    Train the given model on the provided training data and evaluate it on the testing data.
+    Train the model.
 
     Args:
-        model (tf.keras.models.Model): The neural network model to be trained.
-        x_train (np.ndarray): The input features of the training set.
-        y_train (np.ndarray): The target labels of the training set.
-        x_test (np.ndarray): The input features of the testing set.
-        y_test (np.ndarray): The target labels of the testing set.
-        epochs (int): The number of training epochs.
-        batch_size (int, optional): The size of each batch during training.
-        callbacks (list, optional): List of keras callbacks to be applied during training.
+        model (tf.keras.Model): The model to train.
+        train_data (tf.keras.preprocessing.image.ImageDataGenerator): Training data.
+        val_data (tf.keras.preprocessing.image.ImageDataGenerator): Validation data.
+        x_test (np.ndarray): Testing features.
+        y_test (np.ndarray): Testing labels.
+        epochs (int, optional): The number of epochs to train for.
+        batch_size (int, optional): The batch size to use for training.
+        callbacks (list, optional): List of callbacks to use during training.
 
     Returns:
-        tf.keras.models.Model, tf.keras.callbacks.History: The trained model and its training history.
+        tf.keras.Model: The trained model.
+        tf.keras.callbacks.History: History object containing training metrics.
     """
-    # Train the model and record the training history
-    history = model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(x_test, y_test), callbacks=callbacks)
+    history = model.fit(train_data, epochs=epochs, validation_data=val_data, callbacks=callbacks)
     return model, history

@@ -14,21 +14,20 @@ def load_images(files, folder):
         folder (str): Path to the folder containing the images.
 
     Returns:
-        results(list): A list of dictionaries, each containing image data, age, and gender.
+        results(list): A list of dictionaries, each containing image data and age.
     """
     results = []
 
     for file in files:
         split = file.split('_')
         age = int(split[0])
-        gender = int(split[1])
 
         # Load the image
         img_path = os.path.join(folder, file)
         img = Image.open(img_path)
         img_array = np.array(img)
 
-        results.append({'Images': img_array, 'Ages': age, 'Genders': gender})
+        results.append({'Images': img_array, 'Ages': age})
 
     return results
 

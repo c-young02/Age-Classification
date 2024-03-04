@@ -19,7 +19,7 @@ function useImages() {
 		try {
 			// Fetch images from the API
 			const response = await fetch(
-				`${process.env.REACT_APP_API_URL}/get-validation-images/${start}/${end}`
+				`${process.env.REACT_APP_API_URL}/get-test-images/${start}/${end}`
 			);
 			const data = await response.json();
 			// Add the fetched images to the current images
@@ -45,15 +45,10 @@ function useImages() {
 		return { content: <Loading message="Loading" /> };
 	}
 
-	// If there was an error, return an error message and a retry button
+	// If there was an error, return an error message
 	if (error) {
 		return {
-			content: (
-				<div>
-					There was an error loading the images{' '}
-					<button onClick={loadImages}>Retry</button>
-				</div>
-			),
+			content: <div>There was an error loading the images </div>,
 		};
 	}
 

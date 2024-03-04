@@ -64,7 +64,7 @@ def plot_model_accuracy(history):
     plt.show()
 
 
-def plot_confusion_matrix(y_true, y_pred, class_labels):
+def plot_confusion_matrix(y_true, y_pred, class_labels, title):
     """
     Plot the confusion matrix and the normalized confusion matrix.
 
@@ -72,16 +72,17 @@ def plot_confusion_matrix(y_true, y_pred, class_labels):
         y_true (np.ndarray): True labels.
         y_pred (np.ndarray): Predicted labels.
         class_labels (list): List of classes.
+        title (str): Title for the plot.
     """
     conf_matrix = confusion_matrix(y_true, y_pred)
 
     # Plot the original confusion matrix
     plt.figure(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=class_labels, yticklabels=class_labels)
-    plt.title('Confusion Matrix')
+    plt.title(f'{title} Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('True')
-    plt.savefig('plots/confusion_matrix.png')
+    plt.savefig(f'plots/{title}_confusion_matrix.png')
     plt.show()
 
     # Normalize the confusion matrix
@@ -91,14 +92,14 @@ def plot_confusion_matrix(y_true, y_pred, class_labels):
     # Plot the normalized confusion matrix
     plt.figure(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, fmt='.2%', cmap='Blues', xticklabels=class_labels, yticklabels=class_labels)
-    plt.title('Normalized Confusion Matrix')
+    plt.title(f'{title} Normalized Confusion Matrix')
     plt.xlabel('Predicted')
     plt.ylabel('True')
-    plt.savefig('plots/normalized_confusion_matrix.png')
+    plt.savefig(f'plots/{title}_normalized_confusion_matrix.png')
     plt.show()
 
 
-def print_misclassifications(y_true, y_pred, class_labels):
+def print_misclassifications(y_true, y_pred, class_labels, title):
     """
     Print and return counts of misclassifications.
 
@@ -106,6 +107,7 @@ def print_misclassifications(y_true, y_pred, class_labels):
         y_true (np.ndarray): True labels.
         y_pred (np.ndarray): Predicted labels.
         class_labels (list): List of labels for the classes to consider.
+        title (str): Title for the print statement.
 
     Returns:
         dict: Dictionary with counts of misclassifications for each class.
@@ -119,6 +121,6 @@ def print_misclassifications(y_true, y_pred, class_labels):
     # Sum the elements of the confusion matrix that correspond to these indices
     misclassified_count = np.sum(conf_matrix[under_18_indices, :][:, over_25_indices])
 
-    print(f'Number of people under 18 misclassified as over 25: {misclassified_count}')
+    print(f'Number of people under 18 misclassified as over 25 in {title}: {misclassified_count}')
 
     return misclassified_count

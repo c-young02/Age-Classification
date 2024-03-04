@@ -38,22 +38,26 @@ def undersample_age(dataframe, undersampling_operations):
     return dataframe
 
 
-def split_data(df, test_size=0.2):
+def split_data(df, test_size=0.1, validation_size=0.1):
     """
-    Split data into training and testing sets.
+    Split data into training, testing and validation sets.
 
     Args:
         df (pd.DataFrame): The DataFrame containing features and labels.
         test_size (float, optional): The proportion of the dataset to include in the test split.
+        validation_size (float, optional): The proportion of the dataset to include in the validation split.
 
     Returns:
-        x_train, x_test, y_train, y_test (np.ndarray): The training and testing sets.
+        x_train, x_val, x_test, y_train, y_val, y_test (np.ndarray): The training, validation and testing sets.
     """
     # Create features (x) and labels (y)
     x = np.array(df['Images'].values.tolist())  # Convert Series to list, then to NumPy array
     y = np.array(df['AgeClass'])
 
-    # Split data into training and testing sets
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=test_size, stratify=y, random_state=42)
+    # Split data into training and temporary sets
+    x_train, x_temp, y_train, y_temp = train_test_split(x, y, test_size=test_size + validation_size, stratify=y, random_state=42)
 
-    return x_train, x_test, y_train, y_test
+    # Split temporary set into validation and testing sets
+    x_val, x_test, y_val, y_test = train_test_split(x_temp, y_temp, test_size=test_size/(test_size + validation_size), stratify=y_temp, random_state=42)
+
+    return x_train, x_val, x_test, y_train, y_val, y_test

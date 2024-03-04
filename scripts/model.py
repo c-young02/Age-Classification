@@ -27,13 +27,21 @@ def build_model(input_shape, num_classes, learning_rate):
     # Build the model
     model = Sequential([
         base_model,
-        Conv2D(128, (3, 3), activation='relu'),
+        Conv2D(128, (3, 3), activation='relu', padding='same'),
+        MaxPooling2D(pool_size=(2, 2)),
+        BatchNormalization(),
+        Dropout(dropout_rate),
+
+        Conv2D(64, (3, 3), activation='relu', padding='same'),
         MaxPooling2D(pool_size=(2, 2)),
         BatchNormalization(),
         Dropout(dropout_rate),
 
         Flatten(),
         Dense(512, activation='relu'),
+        BatchNormalization(),
+        Dropout(dropout_rate),
+        Dense(256, activation='relu'),
         BatchNormalization(),
         Dropout(dropout_rate),
         Dense(num_classes, activation='softmax')
