@@ -15,6 +15,8 @@ function ImageClassification({
 	reset,
 	setClassifying,
 	onConfidenceReceived,
+	onErrorReceived,
+	error,
 }) {
 	return (
 		<>
@@ -29,22 +31,31 @@ function ImageClassification({
 				</div>
 			) : (
 				<>
-					{!label && (
-						<ClassificationControls
-							onImageSelect={onImageSelect}
-							selectedImage={selectedImage}
-							onLabelReceived={onLabelReceived}
-							onConfidenceReceived={onConfidenceReceived}
-							setClassifying={setClassifying}
-						/>
-					)}
-					{label && (
+					{error ? (
+						<div className="text-center alert alert-danger h3">
+							{error} <StartAgainButton reset={reset} />
+						</div>
+					) : (
 						<>
-							<AgeClassificationContainer
-								label={label}
-								confidence={confidence}
-							/>
-							<StartAgainButton reset={reset} />
+							{!label && (
+								<ClassificationControls
+									onImageSelect={onImageSelect}
+									selectedImage={selectedImage}
+									onLabelReceived={onLabelReceived}
+									onConfidenceReceived={onConfidenceReceived}
+									setClassifying={setClassifying}
+									onErrorReceived={onErrorReceived}
+								/>
+							)}
+							{label && (
+								<>
+									<AgeClassificationContainer
+										label={label}
+										confidence={confidence}
+									/>
+									<StartAgainButton reset={reset} />
+								</>
+							)}
 						</>
 					)}
 				</>

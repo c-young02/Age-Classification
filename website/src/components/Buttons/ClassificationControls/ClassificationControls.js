@@ -9,6 +9,7 @@ function ClassificationControls({
 	onLabelReceived,
 	setClassifying,
 	onConfidenceReceived,
+	onErrorReceived,
 }) {
 	return (
 		<div className="d-flex justify-content-center flex-wrap">
@@ -21,6 +22,7 @@ function ClassificationControls({
 				onLabelReceived={onLabelReceived}
 				setClassifying={setClassifying}
 				onConfidenceReceived={onConfidenceReceived}
+				onErrorReceived={onErrorReceived}
 			/>
 		</div>
 	);

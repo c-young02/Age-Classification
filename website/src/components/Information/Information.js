@@ -11,7 +11,7 @@ function Information() {
 				<Col md={6}>
 					<article className="text-center">
 						<p>{CONTENT.intro}</p>
-						<h5>{CONTENT.progress}</h5>
+						<p>{CONTENT.body}</p>
 					</article>
 				</Col>
 			</Row>

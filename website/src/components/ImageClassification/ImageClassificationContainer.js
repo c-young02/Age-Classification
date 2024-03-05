@@ -8,10 +8,11 @@ function ImageClassificationContainer() {
 		label: null,
 		confidence: null,
 		classifying: false,
+		error: null,
 	});
 
 	// Destructure state variables for easier access
-	const { selectedImage, label, confidence, classifying } = state;
+	const { selectedImage, label, confidence, classifying, error } = state;
 
 	// Function to handle image selection
 	const handleImageSelect = (image) => {
@@ -33,6 +34,11 @@ function ImageClassificationContainer() {
 		setState((prevState) => ({ ...prevState, classifying }));
 	};
 
+	// Function to set error
+	const handleErrorReceived = (error) => {
+		setState((prevState) => ({ ...prevState, error: error }));
+	};
+
 	// Function to reset the state
 	const reset = () => {
 		setState({
@@ -40,6 +46,7 @@ function ImageClassificationContainer() {
 			label: null,
 			confidence: null,
 			classifying: false,
+			error: null,
 		});
 	};
 
@@ -54,6 +61,8 @@ function ImageClassificationContainer() {
 			onConfidenceReceived={handleConfidenceReceived}
 			reset={reset}
 			setClassifying={setClassifying}
+			onErrorReceived={handleErrorReceived}
+			error={error}
 		/>
 	);
 }

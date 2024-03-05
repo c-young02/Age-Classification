@@ -89,7 +89,7 @@ def predict():
         # Handle case when image is not provided in the request
         return jsonify({"error": "Invalid request. Please provide an image."}), 400
     except ValueError as e:
-        # Handle case when image size is more than 5MB
+        # Handle case when image size is more than 5MB or no face is detected
         return jsonify({"error": str(e)}), 400
     except Exception as e:
         # Handle any other exception that may occur during image processing

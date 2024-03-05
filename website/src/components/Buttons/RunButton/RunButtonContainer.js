@@ -7,6 +7,7 @@ function RunButtonContainer({
 	onLabelReceived,
 	setClassifying,
 	onConfidenceReceived,
+	onErrorReceived,
 }) {
 	// Handler for button click
 	const handleClick = async () => {
@@ -18,6 +19,7 @@ function RunButtonContainer({
 			onConfidenceReceived(confidence);
 		} catch (error) {
 			console.error(error);
+			onErrorReceived(error.message);
 		} finally {
 			setClassifying(false);
 		}

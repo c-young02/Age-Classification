@@ -20,6 +20,10 @@ def crop_face(image):
     Returns:
         PIL.Image: The cropped face image. If no face is detected in the image, the original image is returned.
     """
+    # If the image is already 200x200, return the original image
+    if image.size == (200, 200):
+        return image
+
     # Convert image to OpenCV format and detect faces
     img_cv = np.array(image)
     img_cv = cv2.cvtColor(img_cv, cv2.COLOR_RGB2BGR)
@@ -30,6 +34,8 @@ def crop_face(image):
     if len(faces) > 0:
         (x, y, w, h) = faces[0]
         img_cv = img_cv[y:y+h, x:x+w]
+    else:
+        raise ValueError("No face detected in the image.")
 
     # Convert image back to PIL format
     img = Image.fromarray(cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB))
