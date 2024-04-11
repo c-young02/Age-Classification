@@ -7,6 +7,7 @@ from plots import (
     plot_model_accuracy,
     plot_confusion_matrix,
     print_misclassifications,
+    plot_predicted_vs_actual,
 )
 from model import build_model, fine_tune_model
 from train import train_model
@@ -108,6 +109,9 @@ def analyse_results(trained_model, x_val, y_val, x_test, y_test, history=None):
     plot_confusion_matrix(y_test, y_test_pred_classes, class_labels, title="Test")
     print_misclassifications(y_val, y_val_pred_classes, class_labels, title="Validation")
     print_misclassifications(y_test, y_test_pred_classes, class_labels, title="Test")
+    num_images_to_plot = 25
+    indices = list(range(num_images_to_plot))
+    plot_predicted_vs_actual(x_test, y_test, indices, y_test_pred_classes)
 
 
 def main():

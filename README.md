@@ -29,7 +29,7 @@
 
 ![Screenshot](website/public/images/site.png)
 
-This project represents the culmination of my endeavors within my honors computing program, where the objective was to develop an age classification system tailored for facial analysis. Leveraging the robust capabilities of machine learning, the model is constructed upon the foundation of the ResNet50 architecture. Trained meticulously on the  UTKFace dataset, the model strives for exceptional accuracy and inclusivity in predicting ages.
+This project represents the culmination of my endeavors within my honors computing program, where the objective was to develop an age classification system tailored for facial analysis at self-checkouts. The model is constructed upon the foundation of the ResNet50 architecture. Trained meticulously on the  UTKFace dataset, the model strives for exceptional accuracy and inclusivity in predicting ages.
 
 ## Built With
 
@@ -80,7 +80,12 @@ cd age-classification/website
 npx serve build -s
 ```
 
-3. Run the backend by executing the Flask script
+3. Run the pipeline to train a model by executing the main script
+```sh
+python scripts/main.py
+```
+
+4. Run the backend by executing the Flask script
 ```sh
 python scripts/app.py
 ```

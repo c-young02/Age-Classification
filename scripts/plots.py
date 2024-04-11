@@ -44,6 +44,33 @@ def plot_images_grid(df, nrows=5, ncols=5, figsize=(15, 15)):
     plt.show()
 
 
+def plot_predicted_vs_actual(x_test, y_test, indices, predictions, nrows=5, ncols=5, figsize=(15, 15)):
+    """
+    Plot a grid of images displaying real and predicted age class.
+
+    Args:
+        x_test (np.ndarray): The array containing test images.
+        y_test (np.ndarray): The array containing actual age classes for the test set.
+        indices (list): The indices of the images to plot.
+        predictions (list): The list containing predicted age classes.
+        nrows (int): The number of rows in the grid.
+        ncols (int): The number of columns in the grid.
+        figsize (int, int): The size of the entire figure.
+    """
+    class_labels = {0: "0-2", 1: "3-17", 2: "18-24", 3: "25-39", 4: "40-59", 5: "60+"}
+    # Plot a grid of images displaying real and predicted age class
+    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize)
+    for index, ax in zip(indices[:nrows*ncols], axes.flatten()):
+        img_array = x_test[index]
+        ax.imshow(img_array)
+        # Use the mapping to display the string class labels
+        ax.set_title(f"Real: {class_labels[y_test[index]]}\nPredicted: {class_labels[predictions[index]]}")
+        ax.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+
 def plot_model_accuracy(history):
     """
     Plot the training and validation accuracy over epochs.
